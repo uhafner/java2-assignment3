@@ -8,7 +8,7 @@ on:
 
 jobs:
   Build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-lastest
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -24,6 +24,8 @@ jobs:
           maven-version: 3.9.1
       - name: Compile, Test and Analysis
         run: mvn -V --color always -ntp clean verify -Dmaven.test.failure.ignore=true | tee maven.log
+      - name: Mutation Coverage
+        run: mvn -V --color always -ntp org.pitest:pitest-maven:mutationCoverage
       - name: Autograding
         uses: uhafner/autograding-github-action@v1.7.0
         with:
@@ -71,5 +73,12 @@ jobs:
                 "maxScore": 100,
                 "coveredPercentageImpact": 0,
                 "missedPercentageImpact": -1
+              },
+              "pit": {
+                "maxScore": 100,
+                "detectedImpact": 0,
+                "undetectedImpact": -1,
+                "detectedPercentageImpact": 0,
+                "undetectedPercentageImpact": 0
               }
             }
