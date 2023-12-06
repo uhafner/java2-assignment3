@@ -20,6 +20,8 @@ jobs:
           java-version: 21
           check-latest: true
           cache: 'maven'
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
         with:
